@@ -4,10 +4,10 @@ pygame.init()
 SCREEN_WIDTH,SCREEN_HEIGHT = 500,500
 display_surface = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
-background = pygame.image.load("PYGAME\CLASS-1-PYGAME-WINDOW\ACTIVITY-1\\background.png")
+background = pygame.image.load("PYGAME\CLASS-1-PYGAME-WINDOW\ACTIVITY-2\\background.png")
 background_img = pygame.transform.scale(background.convert(),(SCREEN_WIDTH,SCREEN_HEIGHT))
 
-penguin = pygame.image.load("PYGAME\CLASS-1-PYGAME-WINDOW\ACTIVITY-1\\penguin.png")
+penguin = pygame.image.load("PYGAME\CLASS-1-PYGAME-WINDOW\ACTIVITY-2\penguin.png")
 penguin_img = pygame.transform.scale(penguin.convert_alpha(),(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
 penguin_rect = penguin_img.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2 - 30))
 
