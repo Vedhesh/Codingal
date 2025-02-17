@@ -6,5 +6,5 @@ for i in range(len(decimal)):
     m=prompt//decimal[i]
     for j in range(m):
         returned += roman[i]
-    n=n%decimal[i]
+    prompt=prompt%decimal[i]
 print(f">{returned}")
