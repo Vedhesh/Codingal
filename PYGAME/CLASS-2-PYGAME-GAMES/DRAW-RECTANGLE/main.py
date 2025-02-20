@@ -5,7 +5,8 @@ surface = pygame.display.set_mode((400,500))
 done = False
 while not done:
     for event in pygame.event.get():
-        if event == pygame.QUIT:
+        if event.type == pygame.QUIT:
             done = True
+            pygame.quit()
     rectangle = pygame.draw.rect(surface, pygame.Color("blue"), pygame.Rect(30,30,60,60))
     pygame.display.flip()
