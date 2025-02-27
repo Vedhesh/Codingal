@@ -26,11 +26,11 @@ def main():
             x+=3
             x2+=3
         if pressed[pygame.K_UP]:
-            y+=3
-            y2-=3
-        if pressed[pygame.K_DOWN]: 
             y-=3
             y2+=3
+        if pressed[pygame.K_DOWN]: 
+            y+=3
+            y2-=3
 
         x = min(max(0, x),screen_width - sprite_width)
         y = min(max(0, y),screen_height//2 - sprite_height)
@@ -42,10 +42,11 @@ def main():
         fps2 = math.floor(fps)
         text = pygame.font.Font("PYGAME\CLASS-3-PYGAME-SPRITES\PROJECT\Menlo-Regular.ttf", 20).render(f"Mirror {fps2}FPS", True, pygame.Color("black"))
         text_rect = text.get_rect(center=(600//2-200, 600//2 + 20))
-        surface.blit(text,text_rect)
-        pygame.draw.rect(surface, current_color, (x, y, sprite_width, sprite_height))
-        pygame.draw.rect(surface, current_color2, (x2, y2, sprite_width, sprite_height))
+        
+        pygame.draw.rect(surface, current_color2, (x, y, sprite_width, sprite_height))
+        pygame.draw.rect(surface, current_color, (x2, y2, sprite_width, sprite_height))
         pygame.draw.line(surface, current_color2, spos, epos, 2)
+        surface.blit(text,text_rect)
         pygame.display.flip()
         clock.tick(120)
     
