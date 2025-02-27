@@ -5,10 +5,11 @@ pygame.init()
 RED = pygame.Color("red")
 BLUE = pygame.Color("blue")
 GREEN = pygame.Color("green")
-#BACKGROUND
 PURPLE = pygame.Color("purple")
 MAGENTA = pygame.Color("magenta")
 YELLOW = pygame.Color("yellow")
+#BACKGROUND
+BLACK = pygame.Color("black")
 
 COLOR_CHANGED = pygame.USEREVENT + 1
 BACKGROUND_COLOR_CHANGED = pygame.USEREVENT + 2
@@ -20,7 +21,7 @@ class Sprite(pygame.sprite.Sprite):
         self.image = pygame.Surface([width, height])
         self.image.fill(color)
         self.rect = self.image.get_rect()
-        self.velocity = [random.choice([-1,1]), random.choice([-1,1])]
+        self.velocity = [random.choice([-5,5]), random.choice([-5,5])]
 
     def update(self):
         self.rect.move_ip(self.velocity)
@@ -39,11 +40,11 @@ class Sprite(pygame.sprite.Sprite):
             pygame.event.post(pygame.event.Event(BACKGROUND_COLOR_CHANGED))
         
     def color_changed(self):
-        self.image.fill(random.choice([RED, BLUE, GREEN]))
+        self.image.fill(random.choice([RED, BLUE, GREEN, YELLOW, PURPLE, MAGENTA]))
 
 def background_color_changed():
     global BACKGROUND_COLOR
-    BACKGROUND_COLOR = random.choice([PURPLE, MAGENTA, YELLOW])
+    BACKGROUND_COLOR = BLACK
 
 SPRITE_GROUP = pygame.sprite.Group()
 SPRITE = Sprite(RED, 20, 30)
@@ -56,7 +57,7 @@ SPRITE_GROUP.add(SPRITE)
 SCREEN = pygame.display.set_mode((500, 400))
 pygame.display.set_caption("Bouncing Square")
 
-BACKGROUND_COLOR = BLUE
+BACKGROUND_COLOR = BLACK
 SCREEN.fill(BACKGROUND_COLOR)
 
 DONE = False
