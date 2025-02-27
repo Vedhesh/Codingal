@@ -27,11 +27,11 @@ class Sprite(pygame.sprite.Sprite):
         self.rect.move_ip(self.velocity)
         COLLISION = False
 
-        if self.rect.left <= 0 or self.rect.right >= 500:
+        if self.rect.left <= 0 or self.rect.right >= 1920:
             self.velocity[0] = -self.velocity[0]
             COLLISION = True
 
-        if self.rect.top <= 0 or self.rect.bottom >= 400:
+        if self.rect.top <= 0 or self.rect.bottom >= 1080:
             self.velocity[1] = -self.velocity[1]
             COLLISION = True
         
@@ -54,7 +54,7 @@ SPRITE.rect.y = random.randint(0, 370)
 
 SPRITE_GROUP.add(SPRITE)
 
-SCREEN = pygame.display.set_mode((500, 400))
+SCREEN = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("Bouncing Square")
 
 BACKGROUND_COLOR = BLACK
