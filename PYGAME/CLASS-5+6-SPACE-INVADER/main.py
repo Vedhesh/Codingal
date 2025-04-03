@@ -19,6 +19,8 @@ ICON_IMAGE = pygame.image.load("PYGAME\\CLASS-5+6-SPACE-INVADER\\icon.png")
 pygame.display.set_icon(ICON_IMAGE)
 
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+BACKGROUND_IMAGE = pygame.image.load("PYGAME\\CLASS-5+6-SPACE-INVADER\\background.png")
+
 
 pygame.display.set_caption("Space Invaders in pygame")
 
@@ -83,9 +85,55 @@ def COLLISION_CHECK(ENEMY_X, ENEMY_Y, BULLET_X, BULLET_Y):
 
 DONE = False
 while not DONE:
-    SCREEN.fill((255, 255, 255))
+    SCREEN.fill((0, 0, 0))
+    SCREEN.blit(BACKGROUND_IMAGE, (0,0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             DONE = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                PLAYER_X_CHANGE = -5
+            if event.key == pygame.K_RIGHT:
+                PLAYER_X_CHANGE = 5
+            if event.key == pygame.K_SPACE and BULLET_STATE == "READY":
+                BULLET_X = PLAYER_X
+                BULLET_FIRE(BULLET_X, BULLET_Y)
+        if event.type == pygame.KEYUP and event.key in [pygame.K_LEFT, pygame.K_RIGHT]:
+            PLAYER_X_CHANGE = 0
+            
+    PLAYER_X += PLAYER_X_CHANGE
+    PLAYER_X = max(0, min(PLAYER_X, SCREEN_WIDTH - 64))
+    for i in ENEMY_Y:
+        print(i)
+    for i in range(ENEMY_COUNT):
+        if ENEMY_Y[i] > 340:
+            for j in range(ENEMY_COUNT):
+                ENEMY_Y[j] = 2000
+            GAME_OVER_TEXT()
+            break
+
+        ENEMY_X[i] += ENEMY_CHANGE_X[i]
+        if ENEMY_X[i] <= 0 or ENEMY_X[i] >= SCREEN_WIDTH - 64:
+            ENEMY_CHANGE_X[i] *= -1
+            ENEMY_Y[i] += ENEMY_CHANGE_Y[i]
+        
+        if COLLISION_CHECK(ENEMY_X[i], ENEMY_Y[i], BULLET_X, BULLET_Y):
+            BULLET_Y = PLAYER_START_Y
+            BULLET_STATE = "READY"
+            SCORE_VALUE += 1
+            ENEMY_X[i] = random.randint(0, SCREEN_WIDTH - 64)
+            ENEMY_X[i] = random.randint(ENEMY_START_MIN_Y, ENEMY_START_MAX_Y)
+        
+        ENEMY(ENEMY_X[i], ENEMY_Y[i], i)
+
+    if BULLET_Y <= 0:
+        BULLET_Y = PLAYER_START_Y
+        BULLET_STATE = "READY"
+    elif BULLET_STATE == "FIRE":
+        BULLET_FIRE(BULLET_X, BULLET_Y)
+        BULLET_Y -= BULLET_CHANGE_Y
+    PLAYER(PLAYER_X, PLAYER_Y)
+    SHOW_SCORE(SCORE_TEXT_X, SCORE_TEXT_Y)
+    pygame.display.update()
 
 pygame.quit()
